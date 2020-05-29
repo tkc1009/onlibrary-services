@@ -53,22 +53,22 @@ CREATE TABLE IF NOT EXISTS review(
 CREATE INDEX ON review(id);
 
 INSERT INTO book_category (name) VALUES
-    ('ミステリー'), 
-    ('サスペンス'), 
-    ('ヒューマン'), 
-    ('アニメーション');
+    ('mystery'), 
+    ('suspense'), 
+    ('human'), 
+    ('animation');
 
 INSERT INTO library (name, address) VALUES
-    ('豊洲図書館','豊洲'),
-    ('品川図書館','品川'),
-    ('駒場図書館','駒場');
+    ('Toyosu Library','Toyosu'),
+    ('Shinagawa Library','Shinagawa'),
+    ('Komaba Library','Komaba');
 
 INSERT INTO book (title, category_id, author_name, isbn, release_date, synopsis) VALUES
-    ('映画001', 1, '俳優001', 'xxxxxx', cast('2017-01-01 00:00:00' as TIMESTAMP), '映画001概要'),
-    ('映画002', 2, '俳優002', 'xxxxxx', cast('2017-02-01 00:00:00' as TIMESTAMP), '映画002概要'),
-    ('映画003', 3, '俳優003', 'xxxxxx', cast('2017-03-01 00:00:00' as TIMESTAMP), '映画003概要'),
-    ('映画004', 4, '俳優004', 'xxxxxx', cast('2017-04-01 00:00:00' as TIMESTAMP), '映画004概要'),
-    ('映画005', 4, '俳優005', 'xxxxxx', cast('2017-05-01 00:00:00' as TIMESTAMP), '映画005概要');
+    ('title001', 1, 'author001', 'xxxxxx', cast('2017-01-01 00:00:00' as TIMESTAMP), 'Summary001'),
+    ('title002', 2, 'author002', 'xxxxxx', cast('2017-02-01 00:00:00' as TIMESTAMP), 'Summary002'),
+    ('title003', 3, 'author003', 'xxxxxx', cast('2017-03-01 00:00:00' as TIMESTAMP), 'Summary003'),
+    ('title004', 4, 'author004', 'xxxxxx', cast('2017-04-01 00:00:00' as TIMESTAMP), 'Summary004'),
+    ('title005', 4, 'author005', 'xxxxxx', cast('2017-05-01 00:00:00' as TIMESTAMP), 'Summary005');
 
 INSERT INTO book_stock (book_id, library_id, total) VALUES
     (1, 1, 1),
@@ -100,17 +100,17 @@ INSERT INTO book_stock (book_id, library_id, total) VALUES
     (1, 3, 8);
 
 INSERT INTO customer (name, password, gender, age, favorite_book, favorite_book_category, favorite_author) VALUES
-    ('user001', 'pass001', 1, 35, '映画001', 1, '俳優001'),
-    ('user002', 'pass002', 2, 22, '映画001', 2, '俳優002'),
-    ('user003', 'pass003', 1, 18, '映画001', 3, '俳優003'),
-    ('user004', 'pass004', 2, 25, '映画001', 2, '俳優004'),
-    ('user005', 'pass005', 1, 31, '映画001', 4, '俳優002');
+    ('user001', 'pass001', 1, 35, 'book001', 1, 'author001'),
+    ('user002', 'pass002', 2, 22, 'book001', 2, 'author002'),
+    ('user003', 'pass003', 1, 18, 'book001', 3, 'author003'),
+    ('user004', 'pass004', 2, 25, 'book001', 2, 'author004'),
+    ('user005', 'pass005', 1, 31, 'book001', 4, 'author002');
     
 INSERT INTO review (book_id, customer_id, comment, rating) VALUES
-    (1,1,'面白かったです！', 5),
-    (2,2,'面白くない', 1),
-    (3,3,'まぁまぁでした', 3),
-    (4,4,'あまり面白くない', 2),
-    (5,5,'わりとよかった！！', 4),
-    (2,4,'おもしろかったー！！', 5),
-    (3,1,'さいこーでした！！！', 5);
+    (1,1,'Good', 5),
+    (2,2,'Bad', 1),
+    (3,3,'So-so', 3),
+    (4,4,'Not Good', 2),
+    (5,5,'well-done', 4),
+    (2,4,'Great', 5),
+    (3,1,'Fantastic', 5);

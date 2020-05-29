@@ -18,3 +18,15 @@ services:
     environment:
       - PGADMIN_DEFAULT_EMAIL=pgadmin@pgadmin.com
       - PGADMIN_DEFAULT_PASSWORD=pgadmin@pgadmin.com
+  
+  spboot:
+    image: gradle:jdk11
+    ports:
+      - 8080:8080
+    command: >
+      bash -c "
+      git clone https://github.com/tkc1009/onlibrary-backend.git &&
+      cat /etc/hosts | awk 'END{print $$1}' | sed -e 's/[0-9]\+$$/1 localhost/g' | tee /etc/hosts &&
+      cd ./* &&
+      gradle bootRun
+      "

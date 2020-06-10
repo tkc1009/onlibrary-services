@@ -1,6 +1,6 @@
 version: '3'
 services:
-  db:
+  postgres:
     image: postgres:12.2
     ports:
       - 5432:5432
@@ -9,7 +9,14 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=library
     volumes:
-      - ./postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - /c/workspace/onlibrary/onlibrary-services/postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      # - type: volume
+      #   source: /${PWD}/postgres/docker-entrypoint-initdb.d
+      #   target: /docker-entrypoint-initdb.d
+    networks:
+      - onlibrary-network
+    deploy:
+      replicas: 1
 
   pgadmin:
     image: dpage/pgadmin4
@@ -18,15 +25,34 @@ services:
     environment:
       - PGADMIN_DEFAULT_EMAIL=pgadmin@pgadmin.com
       - PGADMIN_DEFAULT_PASSWORD=pgadmin@pgadmin.com
+    deploy:
+      replicas: 1
   
   spboot:
     image: gradle:jdk11
     ports:
       - 8080:8080
+    depends_on:
+      - postgres
+    environment:
+      - DATABASE=postgres
     command: >
       bash -c "
       git clone https://github.com/tkc1009/onlibrary-backend.git &&
-      cat /etc/hosts | awk 'END{print $$1}' | sed -e 's/[0-9]\+$$/1 localhost/g' | tee /etc/hosts &&
       cd ./* &&
       gradle bootRun
       "
+    networks:
+      - onlibrary-network
+    deploy:
+      replicas: 1
+
+networks:
+  onlibrary-network:
+
+# volumes:
+#   postgres-volume:
+#     driver_opts:
+#       type: none
+#       device: ${PWD}/postgres/docker-entrypoint-initdb.d
+#       o: bind
